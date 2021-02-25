@@ -1,0 +1,73 @@
+<style>
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+th,td {
+	text-align: left;
+	padding: 8px;
+	white-space: nowrap;
+}
+div {
+	text-align: right;
+}
+tr:nth-child(even) {
+	background-color: mistyrose;
+}
+
+.btn {
+	height: 50px;
+	width: 120px;
+}
+.primary-nav {
+	display: -webkit-flex;
+	display: flex;
+	list-style-type: none;
+	padding: 0;
+	justify-content: flex-end;
+}
+
+.left {
+	margin-right: auto;
+}
+</style>
+<%
+	String userName = "Unknown User?", role = "Unknown Role?";
+	Cookie cookie = null;
+	Cookie[] cookies = null;
+
+	// Get an array of Cookies associated with the this domain
+	cookies = request.getCookies();
+
+	if (cookies != null) {
+		//	out.println("<h2> Found Cookies Name and Value</h2>");
+		for (int i = 0; i < cookies.length; i++) {
+			cookie = cookies[i];
+			//		out.print("Name : " + cookie.getName() + ", ");
+			//		out.print("Value: " + cookie.getValue() + " <br/>");
+			if (cookie.getName().equalsIgnoreCase("userName"))
+				userName = cookie.getValue();
+			if (cookie.getName().equalsIgnoreCase("role"))
+				role = cookie.getValue();
+		}
+	} else {
+		out.println("<h2>No cookies founds</h2>");
+	}
+	//	out.print("---> " + userName + " is a " + role);
+%>
+<nav class="navbar navbar-expand-md navbar-dark"
+	style="background-color: tomato">
+
+	<ul class="navbar-nav">
+		<a href="<%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%>/AgroSanfonaWeb" class="nav-link"
+			style="font-size: 175%">AgroSanfona</a>
+			
+			<div style="font-size: large;">&nbsp;<%=userName%>'s
+			role is:&nbsp; <%=role%></div>
+			
+		<a href="<%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%>/RoleBasedLogin/LogoutServlet"
+			class="nav-link" style="font-size: 175%">Logout</a>
+	</ul>
+			
+</nav>
