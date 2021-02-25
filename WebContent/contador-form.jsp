@@ -450,10 +450,12 @@
 			}
 		}
 
-		function selectText() {
-			var textbox = document.getElementById("fatura");
-			textbox.focus();
-			textbox.scrollIntoView();
+		function setFocus(field) {
+			//			var textbox = document.getElementById("fatura");
+			//			textbox.focus();
+			//			textbox.scrollIntoView();
+			field.focus();
+			//				document.form1.fatura.focus();
 		}
 	</script>
 
@@ -555,7 +557,7 @@ tr:nth-child(even) {
 				<th>Companhia</th>
 			</tr>
 		</thead>
-		<tbody onload="tableloop(quant);">
+		<tbody>
 
 			<tr>
 				<input type="hidden" name="parcela" id="parcela">
@@ -575,7 +577,7 @@ tr:nth-child(even) {
 					<c:if test="${existingcontadorelect != null}">
                                    disabled="true"
                                 </c:if>
-					onChange="selFunction(this);storeFatura();selectText()">
+					onChange="selFunction(this);storeFatura();">
 						<option value="" selected disabled hidden><%=request.getSession().getAttribute("ParcelaValue")%></option>
 						<%
 							while (resultset.next()) {
@@ -585,16 +587,16 @@ tr:nth-child(even) {
 						<%
 							}
 						%>
-				</select></td>
-				<%
-					} catch (Exception e) {
-						out.println("wrong entry" + e);
-					}
-				%>
+				</select> <%
+ 	} catch (Exception e) {
+ 		out.println("wrong entry" + e);
+ 	}
+ %>
 				<td><input type="text" style="width: 200px"
 					value="<c:out value='<%=request.getSession().getAttribute("FaturaValue")%>' />"
 					name="fatura1" id="fatura" size="18" required="required"
-					onChange="storeFatura();checkInvNo()"></td>
+					onfocusout="checkInvNo();setFocus(data1);"
+					onChange="storeFatura();"></td>
 				<td><input type="date"
 					value="<c:out value='<%=request.getSession().getAttribute("Data1Value")%>' />"
 					name="data1" id="data1" style="width: 144px" required="required"
@@ -603,7 +605,7 @@ tr:nth-child(even) {
 				<td><input type="date"
 					value="<c:out value='<%=request.getSession().getAttribute("Data2Value")%>' />"
 					name="data21" id="data2" style="width: 144px" required="required"
-					onfocusout=buildRows();></td>
+					onfocusout="buildRows();"></td>
 
 				<td><input type="date"
 					value="<c:out value='<%=request.getSession().getAttribute("LeituradataValue")%>' />"
@@ -629,9 +631,7 @@ tr:nth-child(even) {
 		</tbody>
 	</table>
 </form>
-<SCRIPT type="text/javascript">
-    document.form1.fatura.focus();
-</SCRIPT>
+
 <form name="form2" id="form2" method="post" action="insert"
 	onsubmit="return setAction(this)">
 	<table style="width: 100%;" id="myTable">

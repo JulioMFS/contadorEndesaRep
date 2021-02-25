@@ -203,7 +203,7 @@ public class contEndesa extends HttpServlet {
 		String redirect = "new";
 		int id = 0;
 		String fatura = request.getParameter("fatura1");
-		String msg = "Fatura: " + fatura + " já existe!";
+		String msg = "Fatura: <strong>" + fatura + "</strong> já existe!";
 		request.getSession().setAttribute("errMessage", "");
 		if (contEndesaDAO.faturaExiste(fatura)) {
 			System.out.println("...msg: " + msg);
@@ -214,8 +214,12 @@ public class contEndesa extends HttpServlet {
 		if (request.getParameter("id") != null) {
 			id = Integer.parseInt(request.getParameter("id"));
 			redirect = "edit?id=" + id;
+			response.sendRedirect(redirect);
+		} else {
+			RequestDispatcher dispatcher = request
+					.getRequestDispatcher("contador-form.jsp");
+			dispatcher.forward(request, response);
 		}
-		response.sendRedirect(redirect);
 	}
 
 	private void getElectPrecos(HttpServletRequest request,
@@ -322,12 +326,8 @@ public class contEndesa extends HttpServlet {
 
 		request.setAttribute("listelectprecos", listelectprecos);
 
-		electricidadePrecos ep = listelectprecos.get(0);
 		List<TableRows> tablerows = contEndesaDAO.getTableRows(tipo, companhia,
 				listelectprecos, 0, 0, 0, 0, data1, data2, estimado);
-		for (int i = 0; i < tablerows.size(); i++) {
-			TableRows tr = tablerows.get(i);
-		}
 		request.setAttribute("tablerows", tablerows);
 		request.getSession().setAttribute("Data1Value", data1);
 		request.getSession().setAttribute("Data2Value", data2);
