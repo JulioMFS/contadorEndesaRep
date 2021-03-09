@@ -29,7 +29,7 @@
 			<h3 class="text-center">Contadores de Electricidade</h3>
 			<hr>
 
-			<form action="ContadorElectServlet" method="post">
+			<form action="contEndesa" method="post">
 				<table style="with: 50%">
 					<tr>
 						<td><div class="container text-left">
