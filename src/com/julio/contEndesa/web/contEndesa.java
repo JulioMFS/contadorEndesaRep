@@ -250,6 +250,7 @@ public class contEndesa extends HttpServlet {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date1);
 		cal.add(Calendar.MONTH, 1);
+		cal.add(Calendar.DAY_OF_YEAR, 1);
 		Date date2 = cal.getTime();
 		String d2 = dateFormat.format(date2);
 		cal.setTime(date1);
