@@ -252,11 +252,12 @@ public class contEndesa extends HttpServlet {
 		cal.add(Calendar.MONTH, 1);
 		cal.add(Calendar.DATE, 1);
 		Date date2 = cal.getTime();
+		d1 = dateFormat.format(date2);
+
 		String d2 = dateFormat.format(date2);
 		cal.setTime(date1);
 		// cal.add(Calendar.DATE, 1);
 		date1 = cal.getTime();
-		d1 = dateFormat.format(date1);
 		int tipo = listcontFactura.get(0).getTipo();
 		fatura = listcontFactura.get(0).getFatura();
 		double potencia = listcontFactura.get(0).getPotencia();
