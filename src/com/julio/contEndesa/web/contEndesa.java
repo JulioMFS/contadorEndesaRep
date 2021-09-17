@@ -249,23 +249,15 @@ public class contEndesa extends HttpServlet {
 		}
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date1);
-
+		cal.add(Calendar.MONTH, 1);
 		cal.add(Calendar.DATE, 1);
 		Date date2 = cal.getTime();
 		d1 = dateFormat.format(date2);
-		// --------------------------------Data
-		// 2------------------------------------------
-		String d2 = listcontFactura.get(0).getData2();
-		try {
-			date2 = new SimpleDateFormat("yyyy-MM-dd").parse(d2);
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		cal.setTime(date2);
-		cal.add(Calendar.MONTH, 1);
-		date2 = cal.getTime();
-		d2 = dateFormat.format(date2);
+
+		String d2 = dateFormat.format(date2);
+		cal.setTime(date1);
+		// cal.add(Calendar.DATE, 1);
+		date1 = cal.getTime();
 		int tipo = listcontFactura.get(0).getTipo();
 		fatura = listcontFactura.get(0).getFatura();
 		double potencia = listcontFactura.get(0).getPotencia();

@@ -3,9 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
-<%@page import="java.util.Calendar"%><%@page import="java.text.*"%>
-<%@page import="java.text.*"%>
+<%@ page import="java.util.Calendar"%>
+<%@ page import="java.text.*"%>
 <%@ page import="java.sql.*"%>
+<%@ page import="java.sql.ResultSet"%>
 <%
 	ResultSet resultset = null;
 %>
@@ -563,9 +564,9 @@ tr:nth-child(even) {
 				<input type="hidden" name="parcela" id="parcela">
 				<%
 					try {
-						Class.forName("com.mysql.jdbc.Driver").newInstance();
+						Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
 						Connection connection = DriverManager
-								.getConnection("jdbc:mysql://localhost:3306/agro?useSSL=false&user=root&password=j301052");
+								.getConnection("jdbc:mysql://localhost:3306/agro?useSSL=false&serverTimezone=GMT&user=root&password=j301052");
 						Statement statement = connection.createStatement();
 
 						resultset = statement

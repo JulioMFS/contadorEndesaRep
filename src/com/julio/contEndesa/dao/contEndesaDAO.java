@@ -1,23 +1,31 @@
 package com.julio.contEndesa.dao;
 
+import org.apache.el.parser.ParseException;
+
+import com.julio.contEndesaElect.model.TableRows;
+import com.julio.contEndesaElect.model.contFactura;
+import com.julio.contEndesaElect.model.contadorElect;
+import com.julio.contEndesaElect.model.electricidadePrecos;
+import com.julio.contEndesaElect.model.potenciaPrecos;
+//import com.mysql.cj.x.protobuf.MysqlxDatatypes.Scalar.String;
+//import com.mysql.jdbc.Connection;
+//import com.mysql.jdbc.PreparedStatement;
+
+
+
+
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import com.julio.contEndesaElect.model.electricidadePrecos;
-import com.julio.contEndesaElect.model.contadorElect;
-import com.julio.contEndesaElect.model.TableRows;
-import com.julio.contEndesaElect.model.contFactura;
-import com.julio.contEndesaElect.model.potenciaPrecos;
 
 /**
  * AbstractDAO.java This DAO class provides CRUD database operations for the
@@ -27,7 +35,7 @@ import com.julio.contEndesaElect.model.potenciaPrecos;
  * 
  */
 public class contEndesaDAO {
-	private String jdbcURL = "jdbc:mysql://localhost:3306/agro?useSSL=false";
+	private String jdbcURL = "jdbc:mysql://localhost:3306/agro?useSSL=false&serverTimezone=GMT";
 	// private String jdbcURL =
 	// "jdbc:mysql://sanfona.myvnc.com:3306/agro?useSSL=false";
 	// private String jdbcURL ="jdbc:mysql://sanfona.myvnc.com:3306/" + schema +
@@ -116,7 +124,7 @@ public class contEndesaDAO {
 		Connection connection = null;
 		String url = jdbcURL.replaceAll("agro", env);
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = DriverManager.getConnection(url, jdbcUsername,
 					jdbcPassword);
 		} catch (SQLException e) {
@@ -609,24 +617,37 @@ public class contEndesaDAO {
 		str[1] = "";
 		SimpleDateFormat formatter = new SimpleDateFormat("dd MMM", new Locale(
 				"pt", "PT"));
+		Date start = null;
 		try {
-			Date start = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
-			Date end = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
-			Date elect = new SimpleDateFormat("yyyy-MM-dd").parse(electDate);
-
-			if ((elect.compareTo(start) > 0) && (end.compareTo(elect) > 0)) {
-				Calendar c = Calendar.getInstance();
-				c.setTime(elect);
-				c.add(Calendar.DATE, -1);
-				Date electMinus1 = c.getTime();
-				str[0] = "(" + formatter.format(start) + " a "
-						+ formatter.format(electMinus1) + ")";
-				str[1] = "(" + formatter.format(elect) + " a "
-						+ formatter.format(end) + ")";
-			}
-
-		} catch (ParseException e) {
+			start = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		Date end = null;
+		try {
+			end = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Date elect = null;
+		try {
+			elect = new SimpleDateFormat("yyyy-MM-dd").parse(electDate);
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		if ((elect.compareTo(start) > 0) && (end.compareTo(elect) > 0)) {
+			Calendar c = Calendar.getInstance();
+			c.setTime(elect);
+			c.add(Calendar.DATE, -1);
+			Date electMinus1 = c.getTime();
+			str[0] = "(" + formatter.format(start) + " a "
+					+ formatter.format(electMinus1) + ")";
+			str[1] = "(" + formatter.format(elect) + " a "
+					+ formatter.format(end) + ")";
 		}
 
 		return str;
@@ -637,9 +658,20 @@ public class contEndesaDAO {
 		Date start = null, end = null, elect = null;
 		try {
 			start = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
 			end = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
 			elect = new SimpleDateFormat("yyyy-MM-dd").parse(electDate);
-		} catch (ParseException e) {
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if ((elect.compareTo(start) > 0) && (end.compareTo(elect) > 0)) {
@@ -674,9 +706,20 @@ public class contEndesaDAO {
 		Date start = null, end = null, elect = null;
 		try {
 			start = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
 			end = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
 			elect = new SimpleDateFormat("yyyy-MM-dd").parse(electDate);
-		} catch (ParseException e) {
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if ((elect.compareTo(start) > 0) && (end.compareTo(elect) > 0)) {
