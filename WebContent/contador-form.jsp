@@ -574,7 +574,7 @@ tr:nth-child(even) {
 				%>
 
 				<td><select id="parcelalist" name="parcelalist" size="1"
-					style="width: 120px"
+					style="width: 170px"
 					<c:if test="${existingcontadorelect != null}">
                                    disabled="true"
                                 </c:if>
